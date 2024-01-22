@@ -8,10 +8,11 @@ It includes:  5 questions in a timed-manner which decreases the time by 10 secon
 * Deployed with GitHub pages
 
 ### 🏆 Livelink
-
+https://cdepalma32.github.io/MyWebAPICodingQuiz
 
 
 ### 💡 GitHub Repository Link
+https://github.com/cdepalma32/MyWebAPICodingQuiz
 
 
 
