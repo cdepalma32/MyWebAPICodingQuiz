@@ -1,38 +1,36 @@
 // List of Questions and Answers
-
 var questions = [
   {
-      prompt: "Inside which HTML element do we put the JavaScript?",
-      options: ["<javascript>", "<js>", "<script>", "<scripting>"],
-      answer: "<script>"
+    prompt: "Inside which HTML element do we put the JavaScript?",
+    options: ["<javascript>", "<js>", "<script>", "<scripting>"],
+    answer: "<script>"
   },
 
   {
-      prompt: "How do you call a function named myFunction?",
-      options: ["call myFunction()", "myFunction()", "call function myFunction", "Call.myFunction"],
-      answer: "myFunction()"
+    prompt: "How do you call a function named myFunction?",
+    options: ["call myFunction()", "myFunction()", "call function myFunction", "Call.myFunction"],
+    answer: "myFunction()"
   },
 
   {
-      prompt: "How does a for loop start?",
-      options: ["for (i = 0; i <= 5; i++)", "for (i = 0; i <= 5)", "for i = 1 to 5", " for (i <= 5; i++)"],
-      answer: "for (i = 0; i <= 5; i++)"
+    prompt: "How does a for loop start?",
+    options: ["for (i = 0; i <= 5; i++)", "for (i = 0; i <= 5)", "for i = 1 to 5", " for (i <= 5; i++)"],
+    answer: "for (i = 0; i <= 5; i++)"
   },
 
   {
-      prompt: "In JavaScript, which of the following is a logical operator?",
-      options: ["|", "&&", "%", "/"],
-      answer: "&&" 
+    prompt: "In JavaScript, which of the following is a logical operator?",
+    options: ["|", "&&", "%", "/"],
+    answer: "&&"
   },
 
   {
-      prompt: "A named element in a JavaScript program that is used to store and retrieve data is a _____.",
-      options: ["method", "assignment operator", "variable", "string"],
-      answer: "variable"
+    prompt: "A named element in a JavaScript program that is used to store and retrieve data is a _____.",
+    options: ["method", "assignment operator", "variable", "string"],
+    answer: "variable"
   }];
 
 // Get Dom Elements
-
 var questionsEl = document.querySelector("#questions");
 var timerEl = document.querySelector("#timer");
 var choicesEl = document.querySelector("#options");
@@ -43,13 +41,11 @@ var feedbackEl = document.querySelector("#feedback");
 var reStartBtn = document.querySelector("#restart");
 
 // Quiz's initial state
-
 var currentQuestionIndex = 0;
 var time = questions.length * 15;
 var timerId;
 
 // Start quiz and hide frontpage
-
 function quizStart() {
   timerId = setInterval(clockTick, 1000);
   timerEl.textContent = time;
@@ -60,23 +56,21 @@ function quizStart() {
 }
 
 // Loop through array of questions and answers and create list with buttons
-
 function getQuestion() {
   var currentQuestion = questions[currentQuestionIndex];
-var promptEl = document.getElementById("question-words")
+  var promptEl = document.getElementById("question-words")
   promptEl.textContent = currentQuestion.prompt;
   choicesEl.innerHTML = "";
-  currentQuestion.options.forEach(function(choice, i) {
-      var choiceBtn = document.createElement("button");
-      choiceBtn.setAttribute("value", choice);
-      choiceBtn.textContent = i + 1 + ". " + choice;
-      choiceBtn.onclick = questionClick;
-      choicesEl.appendChild(choiceBtn);
+  currentQuestion.options.forEach(function (choice, i) {
+    var choiceBtn = document.createElement("button");
+    choiceBtn.setAttribute("value", choice);
+    choiceBtn.textContent = i + 1 + ". " + choice;
+    choiceBtn.onclick = questionClick;
+    choicesEl.appendChild(choiceBtn);
   });
 }
 
 // Check for right answers and deduct time for wrong answer, go to next question
-
 function questionClick() {
   if (this.value !== questions[currentQuestionIndex].answer) {
     time -= 10;
@@ -91,7 +85,7 @@ function questionClick() {
     feedbackEl.style.color = "green";
   }
   feedbackEl.setAttribute("class", "feedback");
-  setTimeout(function() {
+  setTimeout(function () {
     feedbackEl.setAttribute("class", "feedback hide");
   }, 2000);
   currentQuestionIndex++;
@@ -103,7 +97,6 @@ function questionClick() {
 }
 
 // End quiz by hiding questions, stop timer and show final score
-
 function quizEnd() {
   clearInterval(timerId);
   var endScreenEl = document.getElementById("quiz-end");
@@ -114,7 +107,6 @@ function quizEnd() {
 }
 
 // End quiz if timer reaches 0
-
 function clockTick() {
   time--;
   timerEl.textContent = time;
@@ -123,7 +115,6 @@ function clockTick() {
   }
 }
 
-// Save score in local storage along with users' name
 
 function saveHighscore() {
   var name = nameEl.value.trim();
@@ -136,22 +127,21 @@ function saveHighscore() {
     };
     highscores.push(newScore);
     window.localStorage.setItem("highscores", JSON.stringify(highscores));
+    window.location.href = "hscore.html";
+
   }
 }
 
 // Save users' score after pressing enter
-
 function checkForEnter(event) {
   if (event.key === "Enter") {
-      saveHighscore();
+    saveHighscore();
   }
 }
 nameEl.onkeyup = checkForEnter;
 
 // Save users' score after clicking submit
-
 submitBtn.onclick = saveHighscore;
 
 // Start quiz after clicking start quiz
-
 startBtn.onclick = quizStart;  
